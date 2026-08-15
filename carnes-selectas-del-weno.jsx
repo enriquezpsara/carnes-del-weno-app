@@ -80,15 +80,15 @@ function money(n) {
 }
 async function sGet(key) {
   try {
-    const r = await window.storage.get(key, true);
-    return r ? JSON.parse(r.value) : null;
+    const r = localStorage.getItem(key);
+    return r ? JSON.parse(r) : null;
   } catch {
     return null;
   }
 }
 async function sSet(key, value) {
   try {
-    await window.storage.set(key, JSON.stringify(value), true);
+    localStorage.setItem(key, JSON.stringify(value));
   } catch (e) {
     console.error("storage set failed", e);
   }
