@@ -80,17 +80,19 @@ function money(n) {
 }
 async function sGet(key) {
   try {
-    const r = await window.storage.get(key, true);
-    return r ? JSON.parse(r.value) : null;
-  } catch {
+    const value = localStorage.getItem(key);
+    return value ? JSON.parse(value) : null;
+  } catch (error) {
+    console.error("Error leyendo datos:", error);
     return null;
   }
 }
+
 async function sSet(key, value) {
   try {
-    await window.storage.set(key, JSON.stringify(value), true);
-  } catch (e) {
-    console.error("storage set failed", e);
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.error("Error guardando datos:", error);
   }
 }
 function uid(prefix) {
