@@ -80,16 +80,15 @@ function money(n) {
 }
 async function sGet(key) {
   try {
-    const r = localStorage.getItem(key);
-    return r ? JSON.parse(r) : null;
+    const r = await window.storage.get(key, true);
+    return r ? JSON.parse(r.value) : null;
   } catch {
     return null;
   }
 }
-
 async function sSet(key, value) {
   try {
-    localStorage.setItem(key, JSON.stringify(value));
+    await window.storage.set(key, JSON.stringify(value), true);
   } catch (e) {
     console.error("storage set failed", e);
   }
@@ -858,3 +857,4 @@ function Estilos() {
     `}</style>
   );
 }
+
