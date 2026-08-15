@@ -1,21 +1,100 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Carnes Selectas Del Weno</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module">
-      import React from 'https://esm.sh/react@18';
-      import ReactDOM from 'https://esm.sh/react-dom@18/client';
-      import App from './carnes-selectas-del-weno.jsx';
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carnes Selectas Del Weno</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React & ReactDOM -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <!-- Babel para procesar JSX en el navegador -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
 
-      ReactDOM.createRoot(document.getElementById('root')).render(
-        React.createElement(App)
+  <div id="root"></div>
+
+  <script type="text/babel">
+    function App() {
+      const [faltantes, setFaltantes] = React.useState([
+        { id: 1, producto: 'Diezmillo con Hueso', area: 'Carnicería', urgencia: 'Agotado', hora: '10:15 AM' },
+        { id: 2, producto: 'Charola Cárnica #2', area: 'Carnicería', urgencia: 'Insumo', hora: '09:30 AM' }
+      ]);
+      const [busqueda, setBusqueda] = React.useState('');
+
+      const agregarReporte = (nombre, area, urgencia) => {
+        const nuevo = {
+          id: Date.now(),
+          producto: nombre,
+          area: area,
+          urgencia: urgencia,
+          hora: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
+        setFaltantes([nuevo, ...faltantes]);
+      };
+
+      return (
+        <div class="max-w-md mx-auto bg-white min-h-screen shadow-md flex flex-col">
+          <!-- Header -->
+          <header class="bg-red-700 text-white p-4 text-center font-bold text-lg shadow">
+            🥩 Carnes Selectas Del Weno
+            <p class="text-xs font-normal text-red-200">Panel de Control de Piso</p>
+          </header>
+
+          <!-- Contenido -->
+          <main class="p-4 flex-1">
+            <h2 class="font-bold text-gray-800 mb-2">Reportar Faltante Rápido</h2>
+            
+            <div class="grid grid-cols-2 gap-2 mb-6">
+              <button onClick={() => agregarReporte('Diezmillo', 'Carnicería', 'Agotado')} class="p-3 bg-red-50 border border-red-200 rounded-lg text-left hover:bg-red-100 transition">
+                <span class="block font-bold text-red-700">🥩 Diezmillo</span>
+                <span class="text-xs text-red-500">Carnicería</span>
+              </button>
+
+              <button onClick={() => agregarReporte('Pulpa Larga', 'Carnicería', 'Stock Bajo')} class="p-3 bg-amber-50 border border-amber-200 rounded-lg text-left hover:bg-amber-100 transition">
+                <span class="block font-bold text-amber-700">🥩 Pulpa Larga</span>
+                <span class="text-xs text-amber-500">Carnicería</span>
+              </button>
+
+              <button onClick={() => agregarReporte('Leche 1L', 'Supermercado', 'Agotado')} class="p-3 bg-blue-50 border border-blue-200 rounded-lg text-left hover:bg-blue-100 transition">
+                <span class="block font-bold text-blue-700">🥛 Leche 1L</span>
+                <span class="text-xs text-blue-500">Abarrotes</span>
+              </button>
+
+              <button onClick={() => agregarReporte('Charolas #2', 'Carnicería', 'Insumo')} class="p-3 bg-gray-50 border border-gray-200 rounded-lg text-left hover:bg-gray-100 transition">
+                <span class="block font-bold text-gray-700">📦 Charolas #2</span>
+                <span class="text-xs text-gray-500">Insumos</span>
+              </button>
+            </div>
+
+            <!-- Lista de Notificaciones -->
+            <h3 class="font-bold text-gray-800 mb-2">Faltantes Reportados Hoy</h3>
+            <div class="space-y-2">
+              {faltantes.map(item => (
+                <div key={item.id} class="p-3 border rounded-lg flex justify-between items-center bg-gray-50">
+                  <div>
+                    <p class="font-semibold text-sm text-gray-800">{item.producto}</p>
+                    <p class="text-xs text-gray-500">{item.area} • {item.hora}</p>
+                  </div>
+                  <span class={`text-xs px-2 py-1 rounded-full font-bold ${
+                    item.urgencia === 'Agotado' ? 'bg-red-100 text-red-700' :
+                    item.urgencia === 'Stock Bajo' ? 'bg-amber-100 text-amber-700' : 'bg-gray-200 text-gray-700'
+                  }`}>
+                    {item.urgencia}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </main>
+        </div>
       );
-    </script>
-  </body>
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
 </html>
