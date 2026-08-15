@@ -86,6 +86,7 @@ async function sGet(key) {
     return null;
   }
 }
+
 async function sSet(key, value) {
   try {
     localStorage.setItem(key, JSON.stringify(value));
