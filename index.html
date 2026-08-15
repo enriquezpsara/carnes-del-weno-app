@@ -1,108 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Carnes Selectas Del Weno</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 min-h-screen text-gray-800">
-
-  <div class="max-w-md mx-auto bg-white min-h-screen shadow-md flex flex-col">
-    <!-- Header -->
-    <header class="bg-red-700 text-white p-4 text-center font-bold text-lg shadow">
-      🥩 Carnes Selectas Del Weno
-      <p class="text-xs font-normal text-red-200">Control de Inventario y Faltantes</p>
-    </header>
-
-    <!-- Contenido Principal -->
-    <main class="p-4 flex-1">
-      <h2 class="font-bold text-gray-800 mb-3 text-sm uppercase tracking-wide">Reportar Faltante Rápido</h2>
-      
-      <!-- Botones de Acción Rápida -->
-      <div class="grid grid-cols-2 gap-2 mb-6">
-        <button onclick="agregarFaltante('Diezmillo c/ Hueso', 'Carnicería', 'Agotado')" class="p-3 bg-red-50 border border-red-200 rounded-lg text-left hover:bg-red-100 transition active:scale-95">
-          <span class="block font-bold text-red-700">🥩 Diezmillo</span>
-          <span class="text-xs text-red-500">Carnicería • Agotado</span>
-        </button>
-
-        <button onclick="agregarFaltante('Pulpa Larga', 'Carnicería', 'Stock Bajo')" class="p-3 bg-amber-50 border border-amber-200 rounded-lg text-left hover:bg-amber-100 transition active:scale-95">
-          <span class="block font-bold text-amber-700">🥩 Pulpa Larga</span>
-          <span class="text-xs text-amber-500">Carnicería • Stock Bajo</span>
-        </button>
-
-        <button onclick="agregarFaltante('Leche 1L', 'Abarrotes', 'Agotado')" class="p-3 bg-blue-50 border border-blue-200 rounded-lg text-left hover:bg-blue-100 transition active:scale-95">
-          <span class="block font-bold text-blue-700">🥛 Leche 1L</span>
-          <span class="text-xs text-blue-500">Pasillo • Agotado</span>
-        </button>
-
-        <button onclick="agregarFaltante('Charolas #2', 'Insumos', 'Faltante')" class="p-3 bg-gray-50 border border-gray-200 rounded-lg text-left hover:bg-gray-100 transition active:scale-95">
-          <span class="block font-bold text-gray-700">📦 Charolas #2</span>
-          <span class="text-xs text-gray-500">Empaque • Insumo</span>
-        </button>
-      </div>
-
-      <!-- Formulario Personalizado -->
-      <div class="bg-gray-50 p-3 rounded-lg border mb-6">
-        <p class="text-xs font-bold text-gray-600 mb-2">OTRO PRODUCTO</p>
-        <div class="flex gap-2">
-          <input type="text" id="customProduct" placeholder="Ej. Carbón 3kg..." class="flex-1 p-2 border rounded text-sm outline-none focus:border-red-500">
-          <button onclick="agregarPersonalizado()" class="bg-red-700 text-white text-sm px-4 py-2 rounded font-bold hover:bg-red-800">Enviar</button>
-        </div>
-      </div>
-
-      <!-- Lista de Faltantes Reportados -->
-      <h3 class="font-bold text-gray-800 mb-2 text-sm uppercase tracking-wide">Faltantes Reportados Hoy</h3>
-      <div id="listaFaltantes" class="space-y-2">
-        <!-- Notificaciones agregadas dinámicamente -->
-      </div>
-    </main>
-  </div>
-
-  <script>
-    const lista = [
-      { producto: 'Diezmillo c/ Hueso', area: 'Carnicería', urgencia: 'Agotado', hora: '10:15 AM' },
-      { producto: 'Charolas #2', area: 'Insumos', urgencia: 'Faltante', hora: '09:30 AM' }
-    ];
-
-    function renderizar() {
-      const contenedor = document.getElementById('listaFaltantes');
-      contenedor.innerHTML = '';
-      
-      lista.forEach(item => {
-        const colorBadge = item.urgencia === 'Agotado' ? 'bg-red-100 text-red-700' : 
-                          item.urgencia === 'Stock Bajo' ? 'bg-amber-100 text-amber-700' : 'bg-gray-200 text-gray-700';
-
-        contenedor.innerHTML += `
-          <div class="p-3 border rounded-lg flex justify-between items-center bg-white shadow-sm">
-            <div>
-              <p class="font-semibold text-sm text-gray-800">${item.producto}</p>
-              <p class="text-xs text-gray-500">${item.area} • ${item.hora}</p>
-            </div>
-            <span class="text-xs px-2.5 py-1 rounded-full font-bold ${colorBadge}">
-              ${item.urgencia}
-            </span>
-          </div>
-        `;
-      });
-    }
-
-    function agregarFaltante(producto, area, urgencia) {
-      const hora = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      lista.unshift({ producto, area, urgencia, hora });
-      renderizar();
-    }
-
-    function agregarPersonalizado() {
-      const input = document.getElementById('customProduct');
-      if (input.value.trim() !== '') {
-        agregarFaltante(input.value, 'General', 'Agotado');
-        input.value = '';
-      }
-    }
-
-    // Inicializar lista
-    renderizar();
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Del Weno - Inventarios</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/App.jsx"></script>
+  </body>
 </html>
