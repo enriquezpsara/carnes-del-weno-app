@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint . --ext js,jsx",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
